@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoadPulse AI | Traffic Intelligence</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>RoadPulse<span class="brand-ai"> AI</span><small>TRAFFIC INTELLIGENCE</small></span></a>
+      <div class="nav-label">WORKSPACE</div>
+      <a class="nav-item active" href="#overview"><span>◫</span> Overview</a>
+      <a class="nav-item" href="#upload"><span>↥</span> Video analysis</a>
+      <a class="nav-item" href="#results"><span>▥</span> Analysis results</a>
+      <div class="sidebar-bottom"><div class="status-dot"></div><div><b>Local analysis engine</b><small>Runs on this computer</small></div></div>
+    </aside>
+    <main class="main" id="overview">
+      <header class="topbar"><div><div class="eyebrow">TRAFFIC MONITORING / OVERVIEW</div><h1>Traffic intelligence</h1><p class="subtitle">Turn road footage into vehicle insights and congestion signals.</p></div><div class="top-pill"><span class="pulse"></span> AI engine ready to start</div></header>
+      <section class="hero">
+        <div class="hero-copy"><div class="eyebrow light">VIDEO-BASED ROAD ANALYTICS</div><h2>See traffic.<br><em>Understand movement.</em></h2><p>Upload a road video to detect and track vehicles, review traffic levels, and identify changes in visible vehicle activity.</p><a class="hero-cta" href="#upload">Analyze a video <span>→</span></a></div>
+        <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="road"><div class="lane-line"></div><div class="mini-car car-one"></div><div class="mini-car car-two"></div><div class="mini-car car-three"></div><div class="scan-box scan-a"></div><div class="scan-box scan-b"></div></div><div class="art-tag tag-top">AI VEHICLE TRACKING</div><div class="art-tag tag-bottom"><span class="status-dot"></span> VIDEO ANALYTICS</div></div>
+      </section>
+      <section class="metrics" id="results">
+        <article class="metric-card"><div class="metric-top"><span>Vehicles tracked</span><span class="metric-icon">↗</span></div><div class="metric-value" id="metricVehicles">—</div><div class="metric-foot">Unique track IDs in analyzed clip</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Traffic level</span><span class="metric-icon">◉</span></div><div class="metric-value" id="metricDensity">—</div><div class="metric-foot">Provisional threshold estimate</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Peak visible</span><span class="metric-icon">▥</span></div><div class="metric-value" id="metricPeak">—</div><div class="metric-foot">Vehicles in one sampled frame</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Video duration</span><span class="metric-icon">◷</span></div><div class="metric-value" id="metricDuration">—</div><div class="metric-foot">Duration of uploaded footage</div></article>
+      </section>
+      <section class="content-grid">
+        <article class="panel upload-panel" id="upload"><div class="panel-heading"><div><div class="eyebrow">START AN ANALYSIS</div><h3>Upload road footage</h3><p>Choose a video file from a fixed camera, dashcam, or sample road clip.</p></div><span class="step-badge">01 / INPUT</span></div>
+          <form id="uploadForm"><label class="dropzone" id="dropzone" for="videoInput"><div class="upload-icon">↑</div><strong id="fileTitle">Drop your video here</strong><span id="fileSubtitle">or click to browse your computer</span><small>MP4 · AVI · MOV · MKV · WEBM · Max 200 MB</small><input id="videoInput" name="video" type="file" accept="video/mp4,video/avi,video/quicktime,video/x-matroska,video/webm,.mp4,.avi,.mov,.mkv,.webm" required></label>
+          <div class="video-preview hidden" id="previewWrap"><video id="videoPreview" controls></video></div>
+          <div class="form-row"><div><label for="cameraName">Camera / location label <span>Optional</span></label><input id="cameraName" placeholder="e.g. Main Road — Camera 01" maxlength="80"></div><div><label for="sampleRate">Analysis speed</label><select id="sampleRate"><option value="fast">Fast preview</option><option value="balanced" selected>Balanced</option></select></div></div>
+          <button class="primary-btn" id="analyzeBtn" type="submit"><span>Run AI analysis</span><span>→</span></button><div class="privacy-note">♢ Video is processed locally by this app and the uploaded source is deleted after analysis.</div><div class="progress-wrap hidden" id="progressWrap"><div class="progress-head"><span id="progressText">Loading detector and analyzing video…</span><span class="spinner"></span></div><div class="progress-track"><div class="progress-bar"></div></div><small>First run may take longer while the pretrained model downloads.</small></div><div class="error-box hidden" id="errorBox"></div>
+        </form></article>
+        <article class="panel insight-panel"><div class="panel-heading"><div><div class="eyebrow">WHAT THIS APP MEASURES</div><h3>Analysis snapshot</h3><p>Results are based on sampled frames from your uploaded clip.</p></div><span class="step-badge">02 / INSIGHTS</span></div>
+          <div class="class-list"><div class="class-row"><span class="class-icon car">C</span><div class="class-info"><b>Cars</b><small>Tracked vehicles</small></div><strong id="countCar">—</strong></div><div class="class-row"><span class="class-icon moto">M</span><div class="class-info"><b>Motorcycles</b><small>Tracked vehicles</small></div><strong id="countMoto">—</strong></div><div class="class-row"><span class="class-icon bus">B</span><div class="class-info"><b>Buses</b><small>Tracked vehicles</small></div><strong id="countBus">—</strong></div><div class="class-row"><span class="class-icon truck">T</span><div class="class-info"><b>Trucks</b><small>Tracked vehicles</small></div><strong id="countTruck">—</strong></div></div>
+          <div class="alert-card" id="alertCard"><div class="alert-symbol">!</div><div><b id="alertTitle">Congestion signal</b><p id="alertText">Upload a clip to inspect whether visible vehicle activity increases or decreases over time.</p></div></div>
+          <div class="disclaimer">Traffic levels are provisional estimates based on visible vehicle counts. They are not a validated road-capacity measure or a guaranteed congestion forecast.</div>
+        </article>
+      </section>
+      <section class="panel output-panel hidden" id="outputPanel"><div class="panel-heading"><div><div class="eyebrow">COMPLETED ANALYSIS</div><h3 id="resultHeading">Video analysis results</h3><p id="resultSubheading">Annotated output and traffic signals from your clip.</p></div><a class="download-btn" id="downloadVideo" href="#" download>Download annotated video ↓</a></div><div class="result-layout"><div class="result-video"><video id="resultVideo" controls></video></div><div class="result-summary"><div class="density-badge" id="densityBadge">TRAFFIC LEVEL</div><h2 id="resultDensity">—</h2><p id="resultExplanation">—</p><div class="summary-stat"><span>Average vehicles visible</span><b id="resultAverage">—</b></div><div class="summary-stat"><span>Peak vehicles visible</span><b id="resultPeak">—</b></div><div class="summary-stat"><span>Sampled frames analyzed</span><b id="resultFrames">—</b></div><div class="summary-stat"><span>Change signal</span><b id="resultTrend">—</b></div></div></div><div class="chart-block"><div><h4>Visible vehicle activity</h4><p>Vehicles detected in each sampled frame over video time.</p></div><div class="chart" id="timelineChart"><span class="chart-empty">Timeline appears after analysis</span></div></div>
+        <section class="detective-panel" aria-labelledby="detectiveHeading">
+          <div class="detective-heading"><div><div class="eyebrow">EXPLAINABLE TRAFFIC SIGNALS</div><h3 id="detectiveHeading">Congestion Detective</h3><p>Checks for several signs that may indicate a developing bottleneck.</p></div><span class="step-badge">03 / DIAGNOSIS</span></div>
+          <div class="signal-grid">
+            <article class="signal-item" id="signalIncreasing"><span class="signal-status">—</span><div><b>Vehicle count is increasing</b><p id="signalIncreasingText">Waiting for video analysis.</p></div></article>
+            <article class="signal-item" id="signalSlow"><span class="signal-status">—</span><div><b>Vehicles are moving slowly</b><p id="signalSlowText">Waiting for video analysis.</p></div></article>
+            <article class="signal-item" id="signalQueue"><span class="signal-status">—</span><div><b>Queue is growing in the same section</b><p id="signalQueueText">Waiting for video analysis.</p></div></article>
+          </div>
+          <div class="bottleneck-verdict" id="bottleneckVerdict"><div class="verdict-icon">!</div><div><b id="bottleneckTitle">Possible cause: developing traffic bottleneck</b><p id="bottleneckSummary">Run an analysis to see whether the video provides combined evidence of increasing traffic, slow movement, and queue growth.</p></div></div>
+          <div class="evidence-block"><h4>Evidence from this clip</h4><ul id="bottleneckEvidence"><li>Evidence will appear after analysis.</li></ul></div>
+          <div class="method-note" id="bottleneckLimitations">These are heuristic indicators, not proof of the cause of congestion. Camera perspective, movement direction, occlusion, and tracking errors can affect the estimates.</div>
+        </section>
+        <section class="intelligence-grid">
+          <article class="feature-panel" aria-labelledby="roadSpaceHeading">
+            <div class="feature-heading"><div><div class="eyebrow">SPATIAL ANALYTICS</div><h3 id="roadSpaceHeading">Road-Space Intelligence</h3><p>Compare visible vehicle occupancy and movement across three image regions.</p></div><span class="step-badge">04 / SPACE</span></div>
+            <div class="occupancy-summary"><div><span>Average image-region occupancy</span><strong id="overallOccupancy">—</strong></div><div><span>Movement distribution</span><strong id="movementBalance">—</strong></div></div>
+            <div class="region-grid" id="regionGrid"><div class="region-card"><span>LEFT</span><strong>—</strong><small>Waiting for analysis</small></div><div class="region-card"><span>CENTRE</span><strong>—</strong><small>Waiting for analysis</small></div><div class="region-card"><span>RIGHT</span><strong>—</strong><small>Waiting for analysis</small></div></div>
+            <div class="feature-callout" id="roadSpaceSummary">Upload a video to compare left, centre, and right image regions.</div>
+            <div class="method-note" id="roadSpaceLimitations">Occupancy is a bounding-box estimate inside fixed image regions, not a calibrated road-surface measurement.</div>
+          </article>
+          <article class="feature-panel" aria-labelledby="nearMissHeading">
+            <div class="feature-heading"><div><div class="eyebrow">SAFETY REVIEW</div><h3 id="nearMissHeading">Near-Miss Risk Radar</h3><p>Flags tracked vehicle paths that may approach one another for human review.</p></div><span class="step-badge">05 / SAFETY</span></div>
+            <div class="risk-banner" id="riskBanner"><div class="risk-symbol">!</div><div><strong id="riskLevel">Awaiting analysis</strong><p id="riskSummary">Potential close-trajectory patterns will appear here after video processing.</p></div></div>
+            <div class="risk-stats"><div><span>Potential interactions</span><strong id="riskCandidateCount">—</strong></div><div><span>High heuristic flags</span><strong id="riskHighCount">—</strong></div><div><span>Moderate flags</span><strong id="riskModerateCount">—</strong></div></div>
+            <div class="event-list-wrap"><h4>Review flagged timestamps</h4><div id="nearMissEvents" class="event-list"><p class="empty-note">No events to show yet.</p></div></div>
+            <div class="method-note" id="nearMissLimitations">These are preliminary image-space indicators, not collision predictions. Review each flagged moment manually.</div>
+          </article>
+        </section>
+        <div class="method-note" id="methodNote"></div></section>
+      <footer>ROADPULSE AI <span>·</span> Student prototype for traffic video analytics <span class="footer-right">Built for experimentation, not live traffic control.</span></footer>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>

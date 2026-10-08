@@ -1,0 +1,96 @@
+ROADPULSE AI - EXPLORATORY DATA ANALYSIS
+================================================
+
+Source file: /mnt/data/RoadPulse-AI/data/traffic_dataset.csv
+Rows: 254
+Columns: 12
+
+COLUMNS AND DATA TYPES
+filename                    object
+date                         int64
+timestamp                  float64
+direction                   object
+day_night                   object
+weather                     object
+start_frame                  int64
+number_of_frames             int64
+traffic_class               object
+notes                       object
+date_parsed         datetime64[ns]
+cctv_id                     object
+
+MISSING VALUES (count)
+filename              0
+date                  0
+timestamp             0
+direction             0
+day_night             0
+weather               0
+start_frame           0
+number_of_frames      0
+traffic_class         0
+notes               240
+date_parsed           0
+cctv_id               0
+
+DUPLICATE ROWS
+0
+
+NUMERIC SUMMARY
+               date  timestamp  start_frame  number_of_frames
+count  2.540000e+02    254.000        254.0           254.000
+mean   2.004081e+07     13.842          2.0            52.429
+std    4.280000e-01      4.278          0.0             1.298
+min    2.004080e+07      6.018          2.0            43.000
+25%    2.004081e+07     10.019          2.0            52.000
+50%    2.004081e+07     15.000          2.0            53.000
+75%    2.004081e+07     17.017          2.0            53.000
+max    2.004081e+07     20.017          2.0            53.000
+
+VALUE COUNTS: traffic_class
+traffic_class
+light     165
+medium     45
+heavy      44
+
+VALUE COUNTS: weather
+weather
+overcast    125
+rain         78
+clear        51
+
+VALUE COUNTS: direction
+direction
+south    254
+
+VALUE COUNTS: day_night
+day_night
+day    254
+
+VALUE COUNTS: date
+date
+20040806    193
+20040805     61
+
+VALUE COUNTS: number_of_frames
+number_of_frames
+53    181
+52     44
+51     11
+50      9
+48      3
+49      3
+47      1
+44      1
+43      1
+
+VALUE COUNTS: cctv_id
+cctv_id
+cctv052    254
+
+VALUE COUNTS: notes
+notes
+NaN              240
+drops on lens     13
+ambiguous          1
+
